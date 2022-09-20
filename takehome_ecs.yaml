@@ -6,7 +6,8 @@ Resources:
       ClusterName: takehomecluster
   taskdefinition:
     Type: 'AWS::ECS::TaskDefinition'
-
+    Properties:
+      NetworkMode: awsvpc
   ECSService:
     Type: 'AWS::ECS::Service'
     Properties:
