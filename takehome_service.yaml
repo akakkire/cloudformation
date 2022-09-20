@@ -1,0 +1,70 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Resources:
+  LoadBalancerRule:
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      Actions:
+        - 
+          TargetGroupArn: !Ref TargetGroup
+          Type: forward
+      Conditions:
+        - 
+          Field: path-pattern
+          Values:
+            - !Ref Path
+      ListenerArn: !Ref ListenerArn
+      Priority: 1
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      HealthCheckIntervalSeconds: 60
+      HealthCheckPath: /takehome/health
+      HealthCheckProtocol: HTTPS
+      HealthCheckTimeoutSeconds: 5
+      HealthyThresholdCount: 5
+      Name: takehome-targetgroup
+      Port: 80
+      Protocol: HTTPS
+      TargetType: ip
+      UnhealthyThresholdCount: 2
+      VpcId: !Ref VPC
+  Service:
+    Type: AWS::ECS::Service
+    DependsOn: LoadBalancerRule
+    Properties:
+      Cluster: !Ref ClusterName
+      DesiredCount: 1
+      HealthCheckGracePeriodSeconds: 400
+      LaunchType: FARGATE
+      LoadBalancers:
+        - 
+          ContainerName: 
+          ContainerPort: 80
+          TargetGroupArn: !Ref TargetGroup
+      NetworkConfiguration:
+        AwsVpcConfiguration:
+          Subnets:
+          SecurityGroups:
+      ServiceName: takehome-service
+      TaskDefinition: !Ref TaskDefinition
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      ContainerDefinitions:
+        - 
+          Cpu: 
+          Image: !Ref Image
+          Memory: 
+          Name: takehome-container
+          PortMappings:
+            - 
+              ContainerPort: 80
+              Protocol: tcp
+            -
+              Cpu: !Ref containercpu
+      Cpu: !Ref taskcpu
+      ExecutionRoleArn: !Ref Executionrolearn
+      Memory: !Ref taskmemory
+      NetworkMode: awsvpc
+      TaskRoleArn: !Ref taskrole
+      
