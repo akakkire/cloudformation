@@ -10,8 +10,7 @@ Resources:
       Conditions:
         - 
           Field: path-pattern
-          Values:
-            - !Ref Path
+          Values: takehome
       ListenerArn: !Ref ListenerArn
       Priority: 1
   TargetGroup:
@@ -27,24 +26,24 @@ Resources:
       Protocol: HTTPS
       TargetType: ip
       UnhealthyThresholdCount: 2
-      VpcId: !Ref VPC
+      VpcId: vpc-0e8af620410c61929
   Service:
     Type: AWS::ECS::Service
     DependsOn: LoadBalancerRule
     Properties:
-      Cluster: !Ref ClusterName
+      Cluster: takehomecluster
       DesiredCount: 1
       HealthCheckGracePeriodSeconds: 400
       LaunchType: FARGATE
       LoadBalancers:
         - 
-          ContainerName: 
+          ContainerName: takehome-container
           ContainerPort: 80
           TargetGroupArn: !Ref TargetGroup
       NetworkConfiguration:
         AwsVpcConfiguration:
-          Subnets:
-          SecurityGroups:
+          Subnets: subnet-0450e5a517afb0696
+          SecurityGroups: sg-042100be4fb5c1495
       ServiceName: takehome-service
       TaskDefinition: !Ref TaskDefinition
   TaskDefinition:
@@ -52,19 +51,18 @@ Resources:
     Properties:
       ContainerDefinitions:
         - 
-          Cpu: 
+          Cpu: 256
           Image: !Ref Image
-          Memory: 
+          Memory: 512
           Name: takehome-container
           PortMappings:
             - 
               ContainerPort: 80
               Protocol: tcp
             -
-              Cpu: !Ref containercpu
-      Cpu: !Ref taskcpu
-      ExecutionRoleArn: !Ref Executionrolearn
-      Memory: !Ref taskmemory
+              Cpu: 512
+      Cpu: 1024
+      ExecutionRoleArn: arn:aws:iam::519927740453:role/takehome
+      Memory: 2048
       NetworkMode: awsvpc
-      TaskRoleArn: !Ref taskrole
-      
+      TaskRoleArn: arn:aws:iam::519927740453:role/takehome
