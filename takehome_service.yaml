@@ -5,7 +5,7 @@ Resources:
     Properties:
       Actions:
         - 
-          TargetGroupArn: !Ref TargetGroup
+          TargetGroupArn: arn:aws:elasticloadbalancing:us-east-1:519927740453:targetgroup/takehome-targetgroup/1971c70f687ab0d2
           Type: forward
       Conditions:
         - 
@@ -25,7 +25,7 @@ Resources:
         - 
           ContainerName: takehome-container
           ContainerPort: 80
-          TargetGroupArn: !Ref TargetGroup
+          TargetGroupArn: arn:aws:elasticloadbalancing:us-east-1:519927740453:targetgroup/takehome-targetgroup/1971c70f687ab0d2
       NetworkConfiguration:
         AwsVpcConfiguration:
           Subnets: subnet-0450e5a517afb0696
