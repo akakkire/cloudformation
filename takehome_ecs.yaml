@@ -4,15 +4,3 @@ Resources:
     Type: 'AWS::ECS::Cluster'
     Properties:
       ClusterName: takehomecluster
-  taskdefinition:
-    Type: 'AWS::ECS::TaskDefinition'
-    Properties:
-      NetworkMode: awsvpc
-  ECSService:
-    Type: 'AWS::ECS::Service'
-    Properties:
-      ServiceName: takehome-service
-      Cluster: !Ref ECSCluster
-      DesiredCount: 1
-      LaunchType: FARGATE
-      TaskDefinition: !Ref taskdefinition
