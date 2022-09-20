@@ -11,22 +11,8 @@ Resources:
         - 
           Field: path-pattern
           Values: takehome
-      ListenerArn: !Ref ListenerArn
+      ListenerArn: arn:aws:elasticloadbalancing:us-east-1:519927740453:listener/app/takehome-loadbalancer/6f5473243418b636/a74fee066e5d8fd8
       Priority: 1
-  TargetGroup:
-    Type: AWS::ElasticLoadBalancingV2::TargetGroup
-    Properties:
-      HealthCheckIntervalSeconds: 60
-      HealthCheckPath: /takehome/health
-      HealthCheckProtocol: HTTPS
-      HealthCheckTimeoutSeconds: 5
-      HealthyThresholdCount: 5
-      Name: takehome-targetgroup
-      Port: 80
-      Protocol: HTTPS
-      TargetType: ip
-      UnhealthyThresholdCount: 2
-      VpcId: vpc-0e8af620410c61929
   Service:
     Type: AWS::ECS::Service
     DependsOn: LoadBalancerRule
