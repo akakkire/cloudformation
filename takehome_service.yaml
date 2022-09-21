@@ -46,8 +46,6 @@ Resources:
               ContainerPort: 80
               Hostport: 80
               Protocol: tcp
-            -
-              Cpu: 512
       ExecutionRoleArn: arn:aws:iam::519927740453:role/takehome
       Memory: 2048
       NetworkMode: awsvpc
