@@ -49,7 +49,6 @@ Resources:
               Protocol: tcp
             -
               Cpu: 512
-      Cpu: 1024
       ExecutionRoleArn: arn:aws:iam::519927740453:role/takehome
       Memory: 2048
       NetworkMode: awsvpc
