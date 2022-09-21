@@ -19,14 +19,14 @@ Resources:
     DependsOn: LoadBalancerRule
     Properties:
       Cluster: takehomecluster
-      DesiredCount: 1
-      HealthCheckGracePeriodSeconds: 400
+      DesiredCount: '1'
+      HealthCheckGracePeriodSeconds: '400'
       LaunchType: FARGATE
       LoadBalancers:
         - ContainerName: takehome-container
-          ContainerPort: 80
+          ContainerPort: '80'
           TargetGroupArn: arn:aws:elasticloadbalancing:us-east-1:519927740453:targetgroup/takehome-targetgroup/1971c70f687ab0d2
-      NetworkConfiguration: vpc
+      NetworkConfiguration: awsvpc
       ServiceName: takehome-service
       TaskDefinition: !Ref TaskDefinition
   TaskDefinition:
