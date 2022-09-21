@@ -1,45 +1,49 @@
+--- 
 AWSTemplateFormatVersion: "2010-09-09"
-Resources:
-  LoadBalancerRule:
-    Type: AWS::ElasticLoadBalancingV2::ListenerRule
-    Properties:
-      Actions:
+Resources: 
+  LoadBalancerRule: 
+    Properties: 
+      Actions: 
         - 
-          TargetGroupArn: arn:aws:elasticloadbalancing:us-east-1:519927740453:targetgroup/takehome-targetgroup/1971c70f687ab0d2
+          TargetGroupArn: "arn:aws:elasticloadbalancing:us-east-1:519927740453:targetgroup/takehome-targetgroup/1971c70f687ab0d2"
           Type: forward
-      Conditions:
+      Conditions: 
         - 
           Field: path-pattern
           Values: 
-          - takehome
-      ListenerArn: arn:aws:elasticloadbalancing:us-east-1:519927740453:listener/app/takehome-loadbalancer/6f5473243418b636/a74fee066e5d8fd8
+            - takehome
+      ListenerArn: "arn:aws:elasticloadbalancing:us-east-1:519927740453:listener/app/takehome-loadbalancer/6f5473243418b636/a74fee066e5d8fd8"
       Priority: 1
-  Service:
-    Type: AWS::ECS::Service
+    Type: "AWS::ElasticLoadBalancingV2::ListenerRule"
+  Service: 
     DependsOn: LoadBalancerRule
-    Properties:
+    Properties: 
       Cluster: takehomecluster
-      DesiredCount: '1'
-      HealthCheckGracePeriodSeconds: '400'
+      DesiredCount: "1"
+      HealthCheckGracePeriodSeconds: "400"
       LaunchType: FARGATE
-      LoadBalancers:
-        - ContainerName: takehome-container
-          ContainerPort: '80'
-          TargetGroupArn: arn:aws:elasticloadbalancing:us-east-1:519927740453:targetgroup/takehome-targetgroup/1971c70f687ab0d2
+      LoadBalancers: 
+        - 
+          ContainerName: takehome-container
+          ContainerPort: "80"
+          TargetGroupArn: "arn:aws:elasticloadbalancing:us-east-1:519927740453:targetgroup/takehome-targetgroup/1971c70f687ab0d2"
       NetworkConfiguration: awsvpc
       ServiceName: takehome-service
-      TaskDefinition: !Ref TaskDefinition
-  TaskDefinition:
-    Type: AWS::ECS::TaskDefinition
-    Properties:
-      ContainerDefinitions:
-        - Image: 519927740453.dkr.ecr.us-east-1.amazonaws.com/takehome-ecr:latest
+      TaskDefinition: TaskDefinition
+    Type: "AWS::ECS::Service"
+  TaskDefinition: 
+    Properties: 
+      ContainerDefinitions: 
+        - 
+          Image: "519927740453.dkr.ecr.us-east-1.amazonaws.com/takehome-ecr:latest"
           Memory: 512
           Name: takehome-container
-          PortMappings:
-            - ContainerPort: 80
+          PortMappings: 
+            - 
+              ContainerPort: 80
               Protocol: tcp
-      ExecutionRoleArn: arn:aws:iam::519927740453:role/takehome
+      ExecutionRoleArn: "arn:aws:iam::519927740453:role/takehome"
       Memory: 2048
       NetworkMode: awsvpc
-      TaskRoleArn: arn:aws:iam::519927740453:role/takehome
+      TaskRoleArn: "arn:aws:iam::519927740453:role/takehome"
+    Type: "AWS::ECS::TaskDefinition"
