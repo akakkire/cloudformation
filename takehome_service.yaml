@@ -28,7 +28,12 @@ Resources:
           ContainerPort: "80"
           TargetGroupArn: "arn:aws:elasticloadbalancing:us-east-1:519927740453:targetgroup/takehome-targetgroup/1971c70f687ab0d2"
       NetworkConfiguration: 
-        - awsvpc
+        Awsvpcconfiguration:
+            AssignPublicIp: ENABLED
+            SecurityGroups: 
+              - sg-042100be4fb5c1495
+            Subnets: 
+              - subnet-0450e5a517afb0696
       ServiceName: takehome-service
       TaskDefinition: TaskDefinition
     Type: "AWS::ECS::Service"
