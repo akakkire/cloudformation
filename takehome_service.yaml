@@ -13,24 +13,21 @@ Resources:
           Values: 
           - takehome
       ListenerArn: arn:aws:elasticloadbalancing:us-east-1:519927740453:listener/app/takehome-loadbalancer/6f5473243418b636/a74fee066e5d8fd8
-      Priority: 1
+      Priority: '1'
   Service:
     Type: AWS::ECS::Service
     DependsOn: LoadBalancerRule
     Properties:
       Cluster: takehomecluster
-      DesiredCount: 1
-      HealthCheckGracePeriodSeconds: 400
+      DesiredCount: '1'
+      HealthCheckGracePeriodSeconds: '400'
       LaunchType: FARGATE
       LoadBalancers:
         - 
           ContainerName: takehome-container
-          ContainerPort: 80
+          ContainerPort: '80'
           TargetGroupArn: arn:aws:elasticloadbalancing:us-east-1:519927740453:targetgroup/takehome-targetgroup/1971c70f687ab0d2
-      NetworkConfiguration:
-        AwsVpcConfiguration:
-          Subnets: subnet-0450e5a517afb0696
-          SecurityGroups: sg-042100be4fb5c1495
+      NetworkConfiguration: vpc
       ServiceName: takehome-service
       TaskDefinition: !Ref TaskDefinition
   TaskDefinition:
@@ -39,14 +36,13 @@ Resources:
       ContainerDefinitions:
         - 
           Image: 519927740453.dkr.ecr.us-east-1.amazonaws.com/takehome-ecr:latest
-          Memory: 512
+          Memory: '512'
           Name: takehome-container
           PortMappings:
             - 
-              ContainerPort: 80
-              Hostport: 80
+              ContainerPort: '80'
               Protocol: tcp
       ExecutionRoleArn: arn:aws:iam::519927740453:role/takehome
-      Memory: 2048
+      Memory: '2048'
       NetworkMode: awsvpc
       TaskRoleArn: arn:aws:iam::519927740453:role/takehome
