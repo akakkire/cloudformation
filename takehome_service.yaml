@@ -10,7 +10,8 @@ Resources:
       Conditions:
         - 
           Field: path-pattern
-          Values: takehome
+          Values: 
+          - takehome
       ListenerArn: arn:aws:elasticloadbalancing:us-east-1:519927740453:listener/app/takehome-loadbalancer/6f5473243418b636/a74fee066e5d8fd8
       Priority: 1
   Service:
@@ -44,6 +45,7 @@ Resources:
           PortMappings:
             - 
               ContainerPort: 80
+              Hostport: 80
               Protocol: tcp
             -
               Cpu: 512
