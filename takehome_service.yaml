@@ -38,7 +38,7 @@ Resources:
       ContainerDefinitions:
         - 
           Cpu: 256
-          Image: !Ref Image
+          Image: 519927740453.dkr.ecr.us-east-1.amazonaws.com/takehome-ecr:latest
           Memory: 512
           Name: takehome-container
           PortMappings:
